@@ -4,6 +4,11 @@ package main
 
 import "fmt"
 
+//Annonimaus attribute
+type basedetail struct {
+	name string
+}
+
 // We create a struct details to hold
 // generic information about games
 type details struct {
@@ -16,13 +21,14 @@ type details struct {
 // more specific information about
 // a particular game
 type game struct {
-	name  string
+	// name  string
+	basedetail
 	price string
 	// We use composition through
 	// embedding to add the
 	// fields of the details
 	// struct to the game struct
-	details
+	action details
 }
 
 // this is a method defined
@@ -40,9 +46,9 @@ func (d details) showDetails() {
 // the game struct is composed
 // of the details struct
 func (g game) show() {
-	fmt.Println("Name: ", g.name)
+	fmt.Println("Name: ", g.name) // as this is annonimaus attribute game.name can be found by compiler
 	fmt.Println("Price:", g.price)
-	g.showDetails()
+	g.action.showDetails() // as this is not annonimaus attribute we need atribute name . method name.
 }
 
 func main() {
@@ -53,7 +59,7 @@ func main() {
 
 	// defining a struct
 	// object of Type game
-	newGame := game{"XYZ", "$125", action}
+	newGame := game{basedetail: basedetail{"XYZ"}, price: "$125", action: action}
 
 	newGame.show()
 }
